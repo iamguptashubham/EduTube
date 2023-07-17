@@ -1,69 +1,71 @@
-const mongoose=require("mongoose")
+import mongoose from "mongoose";
 
-const courseSchema=mongoose.Schema({
-    title:{
-        type:String,
-        required:[true,"please enter your course title"],
-        minLength:[4,"Title must be at least 4 characters"],
-        maxLength:[18,"Title must be at most 18 characters"]
+const schema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: [true, "Please enter course title"],
+    minLength: [4, "Title must be at least 4 characters"],
+    maxLength: [80, "Title can't exceed 80 characters"],
+  },
+  description: {
+    type: String,
+    required: [true, "Please enter course title"],
+    minLength: [20, "Title must be at least 20 characters"],
+  },
+
+  lectures: [
+    {
+      title: {
+        type: String,
+        required: true,
+      },
+      description: {
+        type: String,
+        required: true,
+      },
+      video: {
+        public_id: {
+          type: String,
+          required: true,
+        },
+        url: {
+          type: String,
+          required: true,
+        },
+      },
     },
-    lectures:[
-        {
-            title:{
-                type:String,
-                required:[true,"please enter your course title"],
-            },
-            description:
-            {
-                type:String,
-                required:[true,"please enter your course description"],
-                minLength:[20,"Title must be at least 20 characters"]
-            },
-            video:{
-                public_id:{
-                    type:String,
-                    required:true
-                },
-                url:{
-                    type:String,
-                    required:true
-                }
-        
-            },
-            poster:{
-                public_id:{
-                    type:String,
-                    required:true
-                },
-                url:{
-                    type:String,
-                    required:true
-                }
-        
-            },
-            views:{
-                type:Number,
-                default:0
-            },
-            numOfVideos:{
-                type:Number,
-                default:0
-            },
-            category:{
-                type:String,
-                required:true
-            },
-            createdBy:{
-                type:String,
-                required:[true,"Enter course creator name"]
-            },
-            createdAt:{
-                type:Date,
-                default:Date.now
-            }
-        }
-    ]
-})
+  ],
 
-const Course=mongoose.model("Course",courseSchema)
-module.exports=Course``
+  poster: {
+    public_id: {
+      type: String,
+      required: true,
+    },
+    url: {
+      type: String,
+      required: true,
+    },
+  },
+  views: {
+    type: Number,
+    default: 0,
+  },
+  numOfVideos: {
+    type: Number,
+    default: 0,
+  },
+  category: {
+    type: String,
+    required: true,
+  },
+  createdBy: {
+    type: String,
+    required: [true, "Enter Course Creator Name"],
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+export const Course = mongoose.model("Course", schema);
